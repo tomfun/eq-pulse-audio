@@ -1,0 +1,12 @@
+[Unit]
+Description=PulseAudio Sink Manager
+After=pulseaudio.service
+
+[Service]
+Type=simple
+ExecStart=%h/prj/tomfun/eq/stick_hard_eq.sh
+#Restart=on-failure
+#RestartSec=300
+
+[Install]
+WantedBy=default.target
