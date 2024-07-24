@@ -34,42 +34,10 @@ update_sink_master() {
     pactl move-sink-input "$sink_index" "$target_master_name"
 }
 
-# Function to get the index of the first equalizer sink input
-get_equalizer_sink_input_index() {
-    pactl list short sink-inputs | grep "module-equalizer-sink.c" | head -n 1 | cut -f1
-}
-
-# Function to update the equalizer sink input's master
-update_equalizer_master() {
-    local EQUALIZER_SINK_NAME="EQ_SvenSPS"  # Name of your equalizer sink
-    local TARGET_MASTER_SINK="alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1"  # Target master sink for your equalizer
-
-    local eq_sink_input=$(get_equalizer_sink_input_index)
-    if [ -z "$eq_sink_input" ]; then
-        echo "No equalizer sink input found."
-        return
-    fi
-
-    # Check if HDMI is connected and get its index
-    hdmi_sink=$(pactl list short sinks | grep "$TARGET_MASTER_SINK" | cut -f1)
-    if [ -z "$hdmi_sink" ]; then
-        echo "HDMI sink not found."
-        return
-    fi
-
-    # Check if the equalizer sink is already set to the correct master
-    current_master=$(pactl list sink-inputs | grep -A15 "Sink Input #$eq_sink_input" | grep 'Sink:' | cut -d'#' -f2 | tr -d ' ' | grep -o '[0-9]*')
-    if [[ "$current_master" == "$hdmi_sink" ]]; then
-        echo "Equalizer sink input is already set to the correct HDMI master."
-    else
-        pactl move-sink-input "$eq_sink_input" "$hdmi_sink"
-        echo "Moved equalizer sink input to HDMI master."
-    fi
-}
-
 # Function to handle subscription and reconnection
 subscribe_and_handle() {
     while true; do
+        update_sink_master "EQ_SvenSPS" "alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1"
         pactl subscribe | grep --line-buffered 'sink ' | while read -r line; do
             if echo "$line" | grep -q 'change'; then
                 update_sink_master "EQ_SvenSPS" "alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1"
