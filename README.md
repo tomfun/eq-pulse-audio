@@ -16,7 +16,7 @@ load-module module-dbus-protocol
 #load-module module-combine-sink sink_name=combined slaves=GuiEQ_hdmi,alsa_output.pci-0000_05_00.6.analog-stereo
 
 ### Compress
-"load-module module-ladspa-sink sink_name=eq_after_comp sink_master=EQ_SvenSPS plugin=mbeq_1197 label=mbeq control=19.38,12.46,8.77,6.69,4.62,3.23,2.31,2.31,3.69,3.69,0.92,0.00,2.77,9.23,30.00
+load-module module-ladspa-sink sink_name=eq_after_comp plugin=mbeq_1197 label=mbeq control=19.38,12.46,8.77,6.69,4.62,3.23,2.31,2.31,3.69,3.69,0.92,0.00,2.77,9.23,30.00
 load-module module-ladspa-sink sink_name=shw_sc4 sink_master=eq_after_comp plugin=sc4_1882 label=sc4 control=0.2,20,500,-30,8,5,
 load-module module-ladspa-sink sink_name=eq_n_comp sink_master=shw_sc4 plugin=mbeq_1197 label=mbeq control=-19.38,-12.46,-8.77,-6.69,-4.62,-3.23,-2.31,-2.31,-3.69,-3.69,-0.92,0.00,-2.77,-9.23,-30.00
 
