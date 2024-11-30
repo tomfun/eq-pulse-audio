@@ -1,7 +1,7 @@
 # Compress audio similiar for people perception
 We don't feel much low and very high frequencies
 
-This is example of setup lulseaudio and dirty script to stick to a sink for some plugin
+This is example of setup pulseaudio and dirty script to stick to a sink for some plugin
 
 # Use
 
@@ -26,7 +26,7 @@ load-module module-ladspa-sink sink_name=eq_n_comp sink_master=shw_sc4 plugin=mb
 
 ```shell
 mkdir -p ~/.config/systemd/user/
-ln -sv ~/.config/systemd/user/stick_hard_eq.service $PWD/stick_hard_eq.service
+ln -sv $PWD/stick_hard_eq.service ~/.config/systemd/user/stick_hard_eq.service
 systemctl --user daemon-reload
 systemctl --user enable  stick_hard_eq
 systemctl --user start  stick_hard_eq
