@@ -10,7 +10,7 @@ sudo nano /etc/pulse/default.pa && systemctl restart --user pulseaudio.service; 
 ```pa
 ### Some stuff
 # sudo apt install pulseaudio-equalizer
-load-module module-equalizer-sink sink_name=EQ_SvenSPS sink_master=alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1 sink_properties='device.master_device="alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1"device.de>
+load-module module-equalizer-sink sink_name=EQ_SvenSPS sink_master=alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1 sink_properties='device.master_device="alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1"device.description="EQ_SvenSPS HDMI"'
 load-module module-dbus-protocol
 # qpaeq
 #load-module module-combine-sink sink_name=combined slaves=GuiEQ_hdmi,alsa_output.pci-0000_05_00.6.analog-stereo

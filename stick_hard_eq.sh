@@ -1,9 +1,11 @@
 #!/bin/bash
 
-
+pa_config_sven=$(cat <<EOF
+   load-module module-equalizer-sink sink_name=EQ_SvenSPS sink_properties='device.master_device="alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1"device.description="EQ_SvenSPS HDMI"'
+EOF
+)
 load_sven_eq() {
-  #pacmd load-module module-equalizer-sink sink_name=EQ_SvenSPS sink_properties="'"device.master_device="alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1"device.description="EQ_SvenSPS HDMI""'"
-  pacmd load-module module-equalizer-sink sink_name=EQ_SvenSPS
+  echo $pa_config_sven | pacmd
   move_sink_input "module" "EQ_SvenSPS" "$sink_hdmi"
 }
 
