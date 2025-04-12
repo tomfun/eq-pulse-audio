@@ -121,6 +121,13 @@ check_sink_hdmi() {
     fi
 }
 
+init_pa() {
+  pactl list short modules | grep 'sink_name=virtual_null' \
+    || pactl load-module module-null-sink sink_name=virtual_null sink_properties='device.description="For_Manual_Record"' rate=48000
+  pactl list short modules | grep '10.50.10.0/23' \
+    || pactl load-module module-native-protocol-tcp auth-ip-acl=10.50.10.0/23;192.168.0.183;192.168.0.138 auth-anonymous=true
+}
+
 # Function to handle subscription and reconnection
 subscribe_and_handle() {
     check_sink_hdmi
@@ -129,6 +136,7 @@ subscribe_and_handle() {
     move_sink_input "module" "eq_n_comp" "shw_sc4"
 #    move_sink_input "application" "application name" "device name"
     while true; do
+        init_pa
 #                update_sink_master "eq_after_comp" "alsa_output.pci-0000_05_00.1.hdmi-stereo-extra1"
         pactl subscribe | grep --line-buffered 'sink ' | while read -r line; do
             if echo "$line" | grep -q 'change'; then
