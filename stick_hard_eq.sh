@@ -125,7 +125,7 @@ init_pa() {
   pactl list short modules | grep 'sink_name=virtual_null' \
     || pactl load-module module-null-sink sink_name=virtual_null sink_properties='device.description="For_Manual_Record"' rate=48000
   pactl list short modules | grep '10.50.10.0/23' \
-    || pactl load-module module-native-protocol-tcp auth-ip-acl=10.50.10.0/23;192.168.0.183;192.168.0.138 auth-anonymous=true
+    || pactl load-module module-native-protocol-tcp 'auth-ip-acl=10.50.10.0/23;192.168.0.183;192.168.0.138' auth-anonymous=true
 }
 
 # Function to handle subscription and reconnection
