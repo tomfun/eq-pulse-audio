@@ -1,5 +1,7 @@
 #!/bin/bash
 
+infinite_loop="run"
+
 check_sink_remote() {
     event=$1
     if [[ -n $event ]] && ! grep -q "Event 'remove' on module" <<< "$event"; then
@@ -14,6 +16,9 @@ check_sink_remote() {
     echo "[ -> ]" $event
 #    pactl load-module module-tunnel-sink sink_name=$sink_name server=$remote_address sink=$remote_sink_name
     while true; do
+        if [ "$infinite_loop" != "run" ]; then
+            return 0
+        fi
         pactl load-module module-tunnel-sink sink_name=$sink_name server=$remote_address sink=$remote_sink_name && {
             echo "[ ✔ ] Module loaded successfully."
             break
